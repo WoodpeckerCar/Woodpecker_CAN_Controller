@@ -19,7 +19,7 @@
  * \li \ref ERROR (0) if failure.
  *
  */
-int teleop_cmd_init( int channel );
+int teleop_cmd_init( );
 
 /**
  * @brief Close the teleop_cmd.  Releases and closes all modules
@@ -30,7 +30,7 @@ int teleop_cmd_init( int channel );
  * @return void
  *
  */
-void teleop_cmd_close( int channel );
+void teleop_cmd_close( );
 
 /**
  * @brief Checks the receivd UDP messages and the the OSCC modules 

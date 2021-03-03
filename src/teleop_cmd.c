@@ -53,7 +53,7 @@ teleop_cmd_init(){
 
 }
 
-void teleop_cmd_close( int channel )
+void teleop_cmd_close( )
 {
     oscc_disable( );
     oscc_close( channel );
