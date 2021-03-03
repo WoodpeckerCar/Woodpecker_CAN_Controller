@@ -42,6 +42,13 @@ void signal_handler( int signal_number )
 
 int main( int argc, char **argv )
 {
+
+    printf("%d\n", oscc_open(1));
+    printf("%d\n", oscc_enable());
+    printf("%d\n", oscc_publish_brake_position(0.5));
+
+    if(1)return 0;
+
     oscc_result_t ret = OSCC_OK;
     unsigned long long update_timestamp = get_timestamp_micro();
     unsigned long long elapsed_time = 0;
@@ -61,6 +68,8 @@ int main( int argc, char **argv )
     sigaction( SIGINT, &sig, NULL );
 
     ret = commander_init( channel );
+
+
 
     if ( ret == OSCC_OK )
     {
