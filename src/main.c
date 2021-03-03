@@ -7,10 +7,14 @@
 #include <fcntl.h>
 
 #include "oscc.h"
-#include "commander.h"
-#include "can_protocols/steering_can_protocol.h"
 
-#define COMMANDER_UPDATE_INTERVAL_MICRO (50000)
+//#include "commander.h"
+#include "teleop_cmd.h"
+
+//#include "can_protocols/steering_can_protocol.h"
+#include "can_protocols/steering_angle_can_protocol.h"
+
+#define TELEOP_CMD_UPDATE_INTERVAL_MICRO (50000)
 #define SLEEP_TICK_INTERVAL_MICRO (1000)
 
 static int error_thrown = OSCC_OK;
@@ -42,13 +46,56 @@ void signal_handler( int signal_number )
 
 int main( int argc, char **argv )
 {
+    unsigned long long update_timestamp = get_timestamp_micro();
+    unsigned long long elapsed_time = 0;
+    oscc_result_t ret = OSCC_OK;
 
-    printf("%d\n", oscc_open(1));
-    printf("%d\n", oscc_enable());
-    printf("%d\n", oscc_publish_brake_position(0.5));
 
-    if(1)return 0;
+	// INITIALIZE 
+	teleop_cmd_init();
+	long angle_cmd = 0;
+	
+	
+	if (ret == OSCC_OK)
+	{
+		while(ret == OSCC_OK && error_thrown == OSCC_OK)
+		{
+            
+			// Command line blocking input testing:
+			
+			printf("Input steering angle: ");
+			scanf("%lf", angle_cmd);
+			printf("\nAngle command: %lf", angle_cmd);
+			oscc_publish_steering_angle(ANGLE_STEER_AXLE_1, angle_cmd);
+						
+			// Rapid cycle:
+/*			
+			elapsed_time = get_elapsed_time( update_timestamp );
 
+            if ( elapsed_time > (TELEOP_CMD_UPDATE_INTERVAL_MICRO) )
+            {
+                update_timestamp = get_timestamp_micro();
+				
+				// CYCLIC ACTIONS
+				
+				// Implement later:
+				// ret = check_for_teleop_cmd_update( );
+				
+            }
+
+            // Delay 1 ms to avoid loading the CPU
+            (void) usleep( SLEEP_TICK_INTERVAL_MICRO );
+*/
+		}
+	}
+	
+	
+	// DEINITIALIZE 
+	teleop_cmd_close();
+
+	// ORIGINAL MAIN FUNCTION:
+/*
+	
     oscc_result_t ret = OSCC_OK;
     unsigned long long update_timestamp = get_timestamp_micro();
     unsigned long long elapsed_time = 0;
@@ -97,6 +144,9 @@ int main( int argc, char **argv )
         }
         commander_close( channel );
     }
+
+*/
+
 
     return 0;
 }

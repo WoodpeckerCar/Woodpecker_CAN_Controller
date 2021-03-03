@@ -295,6 +295,48 @@ oscc_result_t oscc_publish_throttle_position( double throttle_position )
     return result;
 }
 
+// Control command for 2byte "EPAS" steering controller ("Chinese" version)
+oscc_result_t oscc_publish_steering_angle( uint8_t axle, double angle ){
+
+	oscc_result_t result = OSCC_ERROR;
+	
+	// Check whether command in range
+	angle = (angle > 1.0) ? 1.0 : angle;
+	angle = (angle < -1.0) ? -1.0 : angle;
+	
+	// Scale to 1 degree resolution and shift into positive range
+	uint16_t angle_scaled = (uint16_t)((double)ANGLE_STEER_AMPLITUDE * angle) + ANGLE_STEER_CENTER;
+
+	oscc_steering_cmd_angle_s steering_cmd_angle =
+	{
+		.control_mode = 0x20,		// default, see struct def for options
+		.reserved[0] = 0x00,
+		.reserved[1] = 0x00,
+		.steer_angle_H = (uint8_t)(angle_scaled >> 8);
+		.steer_angle_L = (uint8_t)(angle_scaled && 0xFF);
+		.angle_instruction = 0x00;	// default, see struct def for options
+		.angular_velocity = 0x96;  
+		.xor_check = 0;
+	};
+	
+    uint8_t* arr = &steering_cmd_angle;	// Create array for byte looping
+    arr[7] = arr[0];					// .xor_check = .control_mode (initiall)
+    for (int i = 1; i < 7; i++){		// Cycle through struct,
+        arr[7] ^= arr[i];				// 	XOR-ing first 7 bytes into 8th (.xor_check).
+    }
+
+	switch axle {
+		case (STEERING_AXLE_2):
+			result = oscc_can_write(OSCC_STEERING_CMD_ANGLE_2_CAN_ID, (void *) &steering_cmd_angle, sizeof(steering_cmd_angle) );		
+			break;
+		default:
+			result = oscc_can_write(OSCC_STEERING_CMD_ANGLE_1_CAN_ID, (void *) &steering_cmd_angle, sizeof(steering_cmd_angle) );
+			break;
+	}
+
+	return result;	
+}
+
 oscc_result_t oscc_publish_epos_value( long steering_pos )
 {
     oscc_result_t result = OSCC_ERROR;

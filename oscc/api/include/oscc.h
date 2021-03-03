@@ -100,6 +100,25 @@ oscc_result_t oscc_publish_brake_position( double brake_position );
 oscc_result_t oscc_publish_throttle_position( double throttle_position );
 
 
+
+/**
+ * @brief Publish message with requested steering angle to
+ *        steering module.
+ *		  (!!) For 2byte "EPAS" steering controller ("Chinese" version)
+ *
+ * @param [in] axle - Axle (1 or 2) to be commanded
+ * 		  For axle 1: ANGLE_STEER_AXLE_1	
+ * 		  For axle 2: ANGLE_STEER_AXLE_2				
+ *        
+ * @param [in] angle - Normalized requested steering wheel
+ *        torque in the range [-1.0, 1.0].
+ *
+ * @return OSCC_ERROR or OSCC_OK
+ *
+ */
+oscc_result_t oscc_publish_steering_angle( uint8_t axle, double angle )
+
+
 /**
  * @brief Publish message with requested steering torque to
  *        steering module.
