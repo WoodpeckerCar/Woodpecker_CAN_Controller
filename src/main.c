@@ -53,21 +53,49 @@ int main( int argc, char **argv )
 
 	// INITIALIZE 
 	teleop_cmd_init();
+
 	double angle_cmd = 0;
-	
+	char input_char;
 	
 	if (ret == OSCC_OK)
 	{
 		while(ret == OSCC_OK && error_thrown == OSCC_OK)
 		{
             
-			// Command line blocking input testing:
 			
+			// Command line blocking incremental input testing:
+			while (1) {
+				printf("Input \'a\' to increment or  \'d\' to decrement:  ");
+				scanf(" %c", &input_char);
+				switch (input_char){
+					case ('a'):
+						(angle_cmd < 1.0) ? (angle_cmd += 0.05) : 1;
+						break;
+					
+					case ('d'):
+						(angle_cmd > -1.0) ? (angle_cmd -= 0.05) : 1;
+						break;
+
+					default: 
+						printf("Input single character - a/d");
+						break;
+				}	
+				
+				printf("\nAngle command: %lf, Angle in degrees: %lf \n\n", angle_cmd, (angle_cmd*520.0) );
+
+				oscc_publish_steering_angle(ANGLE_STEER_AXLE_1, angle_cmd);
+			}
+		
+			// Command line blocking specific input testing:
+/*				
 			printf("Input steering angle: ");
 			scanf("%lf", &angle_cmd);
 			printf("Angle command: %lf \n\n", angle_cmd);
 			oscc_publish_steering_angle(ANGLE_STEER_AXLE_1, angle_cmd);
-						
+*/
+
+
+
 			// Rapid cycle:
 /*			
 			elapsed_time = get_elapsed_time( update_timestamp );

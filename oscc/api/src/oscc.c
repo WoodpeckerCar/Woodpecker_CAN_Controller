@@ -306,6 +306,9 @@ oscc_result_t oscc_publish_steering_angle( uint8_t axle, double angle ){
 	
 	// Scale to 1 degree resolution and shift into positive range
 	uint16_t angle_scaled = (uint16_t)((double)ANGLE_STEER_AMPLITUDE * angle) + ANGLE_STEER_CENTER;
+	
+	//DEBUG:
+	//printf("\n angle_scaled in oscc_publish_steering_angle: %d \n" , angle_scaled);
 
 	oscc_steering_cmd_angle_s steering_cmd_angle =
 	{
@@ -313,11 +316,15 @@ oscc_result_t oscc_publish_steering_angle( uint8_t axle, double angle ){
 		.reserved[0] = 0x00,
 		.reserved[1] = 0x00,
 		.steer_angle_H = (uint8_t)(angle_scaled >> 8),
-		.steer_angle_L = (uint8_t)(angle_scaled && 0xFF),
+		.steer_angle_L = (uint8_t)(angle_scaled & 0xFF),
 		.angle_instruction = 0x00,	// default, see struct def for options
 		.angular_velocity = 0x96,
 		.xor_check = 0,
 	};
+
+	//DEBUG:
+	//printf("steer_angle_H in oscc_publish_steering_angle: %d \n" , steering_cmd_angle.steer_angle_H);
+	//printf("steer_angle_L in oscc_publish_steering_angle: %d \n" , steering_cmd_angle.steer_angle_L);
 	
     uint8_t* arr = &steering_cmd_angle;	// Create array for byte looping
     arr[7] = arr[0];					// .xor_check = .control_mode (initiall)

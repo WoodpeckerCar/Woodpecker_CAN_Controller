@@ -6,8 +6,6 @@
 
 #IncludeRegexTransform: 
 
-../include/teleop_cmd.h
-
 ../oscc/api/include/can_protocols/brake_can_protocol.h
 stdint.h
 -
@@ -68,25 +66,37 @@ stdint.h
 stdint.h
 -
 
-/home/pi/Woodpecker_CAN_Controller/src/main.c
+/home/pi/Woodpecker_CAN_Controller/oscc/api/src/internal/oscc.h
+
+/home/pi/Woodpecker_CAN_Controller/oscc/api/src/oscc.c
 errno.h
--
-unistd.h
--
-stdlib.h
--
-stdio.h
--
-signal.h
--
-sys/time.h
 -
 fcntl.h
 -
+linux/can.h
+-
+linux/can/raw.h
+-
+net/if.h
+-
+signal.h
+-
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+sys/ioctl.h
+-
+sys/socket.h
+-
+sys/types.h
+-
+unistd.h
+-
 oscc.h
-/home/pi/Woodpecker_CAN_Controller/src/oscc.h
-teleop_cmd.h
-/home/pi/Woodpecker_CAN_Controller/src/teleop_cmd.h
-can_protocols/steering_angle_can_protocol.h
-/home/pi/Woodpecker_CAN_Controller/src/can_protocols/steering_angle_can_protocol.h
+/home/pi/Woodpecker_CAN_Controller/oscc/api/src/oscc.h
+internal/oscc.h
+/home/pi/Woodpecker_CAN_Controller/oscc/api/src/internal/oscc.h
 
