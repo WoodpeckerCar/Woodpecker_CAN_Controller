@@ -53,7 +53,7 @@ int main( int argc, char **argv )
 
 	// INITIALIZE 
 	teleop_cmd_init();
-	long angle_cmd = 0;
+	double angle_cmd = 0;
 	
 	
 	if (ret == OSCC_OK)
@@ -64,8 +64,8 @@ int main( int argc, char **argv )
 			// Command line blocking input testing:
 			
 			printf("Input steering angle: ");
-			scanf("%lf", angle_cmd);
-			printf("\nAngle command: %lf", angle_cmd);
+			scanf("%lf", &angle_cmd);
+			printf("Angle command: %lf \n\n", angle_cmd);
 			oscc_publish_steering_angle(ANGLE_STEER_AXLE_1, angle_cmd);
 						
 			// Rapid cycle:

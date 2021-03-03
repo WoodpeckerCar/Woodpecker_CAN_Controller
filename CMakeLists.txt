@@ -13,6 +13,7 @@ endif()
 
 add_executable(
     oscc-joystick-commander
+    src/teleop_cmd.c
     src/commander.c
     src/joystick.c
     src/main.c

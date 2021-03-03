@@ -312,11 +312,11 @@ oscc_result_t oscc_publish_steering_angle( uint8_t axle, double angle ){
 		.control_mode = 0x20,		// default, see struct def for options
 		.reserved[0] = 0x00,
 		.reserved[1] = 0x00,
-		.steer_angle_H = (uint8_t)(angle_scaled >> 8);
-		.steer_angle_L = (uint8_t)(angle_scaled && 0xFF);
-		.angle_instruction = 0x00;	// default, see struct def for options
-		.angular_velocity = 0x96;  
-		.xor_check = 0;
+		.steer_angle_H = (uint8_t)(angle_scaled >> 8),
+		.steer_angle_L = (uint8_t)(angle_scaled && 0xFF),
+		.angle_instruction = 0x00,	// default, see struct def for options
+		.angular_velocity = 0x96,
+		.xor_check = 0,
 	};
 	
     uint8_t* arr = &steering_cmd_angle;	// Create array for byte looping
@@ -325,8 +325,8 @@ oscc_result_t oscc_publish_steering_angle( uint8_t axle, double angle ){
         arr[7] ^= arr[i];				// 	XOR-ing first 7 bytes into 8th (.xor_check).
     }
 
-	switch axle {
-		case (STEERING_AXLE_2):
+	switch (axle) {
+		case (ANGLE_STEER_AXLE_1):
 			result = oscc_can_write(OSCC_STEERING_CMD_ANGLE_2_CAN_ID, (void *) &steering_cmd_angle, sizeof(steering_cmd_angle) );		
 			break;
 		default:

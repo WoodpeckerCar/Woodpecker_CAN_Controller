@@ -14,6 +14,7 @@
 #include "can_protocols/brake_can_protocol.h"
 #include "can_protocols/fault_can_protocol.h"
 #include "can_protocols/steering_can_protocol.h"
+#include "can_protocols/steering_angle_can_protocol.h"
 #include "can_protocols/throttle_can_protocol.h"
 #include "vehicles.h"
 
@@ -116,7 +117,7 @@ oscc_result_t oscc_publish_throttle_position( double throttle_position );
  * @return OSCC_ERROR or OSCC_OK
  *
  */
-oscc_result_t oscc_publish_steering_angle( uint8_t axle, double angle )
+oscc_result_t oscc_publish_steering_angle( uint8_t axle, double angle );
 
 
 /**

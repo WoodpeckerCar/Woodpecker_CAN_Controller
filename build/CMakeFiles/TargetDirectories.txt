@@ -1,0 +1,3 @@
+/home/pi/Woodpecker_CAN_Controller/build/CMakeFiles/rebuild_cache.dir
+/home/pi/Woodpecker_CAN_Controller/build/CMakeFiles/oscc-joystick-commander.dir
+/home/pi/Woodpecker_CAN_Controller/build/CMakeFiles/edit_cache.dir

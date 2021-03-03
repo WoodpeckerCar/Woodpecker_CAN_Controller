@@ -49,7 +49,8 @@ typedef struct
 	uint8_t reserved[2];
     
 	// steering angle command
-	uint8_t steer_angle[2];
+	uint8_t steer_angle_H;
+	uint8_t steer_angle_L;
 	
 	// 0x55 - angle should be set
 	// 0x00 - no alignment required 
