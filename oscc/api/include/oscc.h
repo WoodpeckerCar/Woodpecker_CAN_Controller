@@ -105,11 +105,11 @@ oscc_result_t oscc_publish_throttle_position( double throttle_position );
 /**
  * @brief Publish message with requested steering angle to
  *        steering module.
- *		  (!!) For 2byte "EPAS" steering controller ("Chinese" version)
+ *		  (!!) For 16 bit "EPAS" steering controller ("Chinese" version)
  *
  * @param [in] axle - Axle (1 or 2) to be commanded
- * 		  For axle 1: ANGLE_STEER_AXLE_1	
- * 		  For axle 2: ANGLE_STEER_AXLE_2				
+ * 		  For axle 1: ANGLE_STEERING_AXLE_1	
+ * 		  For axle 2: ANGLE_STEERING_AXLE_2				
  *        
  * @param [in] angle - Normalized requested steering wheel
  *        torque in the range [-1.0, 1.0].
@@ -172,6 +172,20 @@ oscc_result_t oscc_subscribe_to_throttle_reports( void( *callback )( oscc_thrott
  *
  */
 oscc_result_t oscc_subscribe_to_steering_reports( void( *callback )( oscc_steering_report_s *report ) );
+
+/**
+ * @brief Register callback functions to be called when angle steering report
+ *        received from angle steering modules (Axles 1 and 2).
+ *
+ * @param [in] callback - Pointer to callback function to be called when
+ *                        angle steering report received from angle steering module.
+ *
+ * @return OSCC_ERROR or OSCC_OK
+ *
+ */
+oscc_result_t oscc_subscribe_to_angle_steering_1_reports( void( *callback )( oscc_angle_steering_report_s *report ) );
+
+oscc_result_t oscc_subscribe_to_angle_steering_2_reports( void( *callback )( oscc_angle_steering_report_s *report ) );
 
 
 /**

@@ -295,7 +295,7 @@ oscc_result_t oscc_publish_throttle_position( double throttle_position )
     return result;
 }
 
-// Control command for 2byte "EPAS" steering controller ("Chinese" version)
+// Control command for 16 bit "EPAS" steering controller ("Chinese" version)
 oscc_result_t oscc_publish_steering_angle( uint8_t axle, double angle ){
 
 	oscc_result_t result = OSCC_ERROR;
@@ -305,7 +305,7 @@ oscc_result_t oscc_publish_steering_angle( uint8_t axle, double angle ){
 	angle = (angle < -1.0) ? -1.0 : angle;
 	
 	// Scale to 1 degree resolution and shift into positive range
-	uint16_t angle_scaled = (uint16_t)(((int)ANGLE_STEER_AMPLITUDE * angle) + ANGLE_STEER_CENTER);
+	uint16_t angle_scaled = (uint16_t)(((int)ANGLE_STEERING_AMPLITUDE * angle) + ANGLE_STEERING_CENTER);
 	
 	//DEBUG:
 	//printf("\n angle_scaled in oscc_publish_steering_angle: %d \n" , angle_scaled);
@@ -333,11 +333,11 @@ oscc_result_t oscc_publish_steering_angle( uint8_t axle, double angle ){
     }
 
 	switch (axle) {
-		case (ANGLE_STEER_AXLE_1):
-			result = oscc_can_write(OSCC_STEERING_CMD_ANGLE_2_CAN_ID, (void *) &steering_cmd_angle, sizeof(steering_cmd_angle) );		
+		case (ANGLE_STEERING_AXLE_1):
+			result = oscc_can_write(OSCC_ANGLE_STEERING_CMD_2_CAN_ID, (void *) &steering_cmd_angle, sizeof(steering_cmd_angle) );		
 			break;
 		default:
-			result = oscc_can_write(OSCC_STEERING_CMD_ANGLE_1_CAN_ID, (void *) &steering_cmd_angle, sizeof(steering_cmd_angle) );
+			result = oscc_can_write(OSCC_ANGLE_STEERING_CMD_1_CAN_ID, (void *) &steering_cmd_angle, sizeof(steering_cmd_angle) );
 			break;
 	}
 
@@ -463,6 +463,40 @@ oscc_result_t oscc_subscribe_to_steering_reports( void (*callback)(oscc_steering
 
     return result;
 }
+
+// Two separate functions to subscribe to reports from both axles
+// AXLE 1:
+oscc_result_t oscc_subscribe_to_angle_steering_1_reports( void (*callback)(oscc_angle_steering_report_s *report))
+{
+    oscc_result_t result = OSCC_ERROR;
+
+
+    if ( callback != NULL )
+    {
+        angle_steering_1_report_callback = callback;
+        result = OSCC_OK;
+    }
+
+
+    return result;
+}
+// AXLE 2:
+oscc_result_t oscc_subscribe_to_angle_steering_2_reports( void (*callback)(oscc_angle_steering_report_s *report))
+{
+    oscc_result_t result = OSCC_ERROR;
+
+
+    if ( callback != NULL )
+    {
+        angle_steering_2_report_callback = callback;
+        result = OSCC_OK;
+    }
+
+
+    return result;
+}
+
+
 
 oscc_result_t oscc_subscribe_to_fault_reports( void (*callback)(oscc_fault_report_s *report))
 {
@@ -673,9 +707,33 @@ void oscc_update_status( )
                     }
                 }
             }
+			
             else
             {
-                if ( obd_frame_callback != NULL )
+				// EDITING:
+				// How to differentiate between 1 and 2
+                if ( rx_frame.can_id == OSCC_ANGLE_STEERING_1_REPORT_CAN_ID )
+                {
+                    oscc_angle_steering_report_s *angle_steering_report =
+                        ( oscc_angle_steering_report_s* ) rx_frame.data;
+
+
+                    if ( angle_steering_1_report_callback != NULL )
+                    {
+                        angle_steering_1_report_callback( angle_steering_report );
+                    }
+                }
+                else if ( rx_frame.can_id == OSCC_ANGLE_STEERING_2_REPORT_CAN_ID )
+                {
+                    oscc_angle_steering_report_s *angle_steering_report =
+                        ( oscc_angle_steering_report_s* ) rx_frame.data;
+
+                    if ( angle_steering_2_report_callback != NULL )
+                    {
+                        angle_steering_2_report_callback( angle_steering_report );
+                    }
+				}
+			    if ( obd_frame_callback != NULL )
                 {
                     obd_frame_callback( &rx_frame );
                 }

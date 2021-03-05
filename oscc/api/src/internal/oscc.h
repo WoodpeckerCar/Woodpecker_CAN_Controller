@@ -17,6 +17,14 @@ void (*brake_report_callback)(
 void (*steering_report_callback)(
     oscc_steering_report_s *report );
 
+// Two separate callbacks for each axle
+// Axle 1:
+void (*angle_steering_1_report_callback)(
+    oscc_angle_steering_report_s *report );
+// Axle 2:
+void (*angle_steering_2_report_callback)(
+    oscc_angle_steering_report_s *report );
+
 void (*throttle_report_callback)(
     oscc_throttle_report_s *report );
 

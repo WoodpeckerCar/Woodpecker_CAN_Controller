@@ -26,7 +26,8 @@
 
 //// Prototypes of internal functions called by interface functions
 static void brake_callback(oscc_brake_report_s *report);
-//static void angle_steering_callback(oscc_steering_report_s *report);
+static void angle_steering_1_callback(oscc_steering_report_s *report);
+static void angle_steering_2_callback(oscc_steering_report_s *report);
 static void throttle_callback(oscc_throttle_report_s *report);
 
 //// Interface functions
@@ -46,7 +47,8 @@ teleop_cmd_init(){
 
 	//oscc_subscribe_to_obd_messages(obd_callback);
 	oscc_subscribe_to_brake_reports(brake_callback);
-	//oscc_subscribe_to_steering_reports(steering_callback);
+	oscc_subscribe_to_angle_steering_1_reports(angle_steering_1_callback);
+	oscc_subscribe_to_angle_steering_2_reports(angle_steering_2_callback);
 	oscc_subscribe_to_throttle_reports(throttle_callback);
 	//oscc_subscribe_to_fault_reports(fault_callback);
 	
@@ -88,17 +90,17 @@ static void throttle_callback(oscc_throttle_report_s *report)
     }
 }
 
-/*
-static void angle_steering_callback(oscc_steering_report_s *report)
-{
-    if ( report->operator_override )
-    {
-        // commander_disable_controls();
 
-        printf("Override: Steering\n");
-    }
+static void angle_steering_1_callback(oscc_steering_report_s *report)
+{
+    printf("angle_steering_1_callback\n");
+	
 }
-*/
+static void angle_steering_2_callback(oscc_steering_report_s *report)
+{
+    printf("angle_steering_2_callback\n");
+}
+
 
 static void brake_callback(oscc_brake_report_s * report)
 {

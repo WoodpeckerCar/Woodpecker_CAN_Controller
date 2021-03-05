@@ -83,7 +83,7 @@ int main( int argc, char **argv )
 				
 				printf("\nAngle command: %lf, Angle in degrees: %lf \n\n", angle_cmd, (angle_cmd*520.0) );
 
-				oscc_publish_steering_angle(ANGLE_STEER_AXLE_1, angle_cmd);
+				oscc_publish_steering_angle(ANGLE_STEERING_AXLE_1, angle_cmd);
 			}
 		
 			// Command line blocking specific input testing:
@@ -91,7 +91,7 @@ int main( int argc, char **argv )
 			printf("Input steering angle: ");
 			scanf("%lf", &angle_cmd);
 			printf("Angle command: %lf \n\n", angle_cmd);
-			oscc_publish_steering_angle(ANGLE_STEER_AXLE_1, angle_cmd);
+			oscc_publish_steering_angle(ANGLE_STEERING_AXLE_1, angle_cmd);
 */
 
 
