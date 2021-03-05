@@ -84,7 +84,7 @@ static void throttle_callback(oscc_throttle_report_s *report)
 {
     if ( report->operator_override )
     {
-         commander_disable_controls();
+         //commander_disable_controls();
 
         printf("Override: Throttle\n");
     }
