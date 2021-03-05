@@ -24,26 +24,32 @@
 
 // ToDo: Maybe add channel input arguments to ..init() and ..close() (see commander.c)
 
+//// Prototypes of internal functions called by interface functions
+static void brake_callback(oscc_brake_report_s *report);
+//static void angle_steering_callback(oscc_steering_report_s *report);
+static void throttle_callback(oscc_throttle_report_s *report);
 
+//// Interface functions
 teleop_cmd_init(){
-    int ret_open = OSCC_ERROR;
-    ret_open = oscc_open( 1 );
+ 	int ret_open = OSCC_ERROR;
+ 	ret_open = oscc_open( 1 );
 	printf("Opening OSCC: %d\n", ret_open);
 
 	// Is this necessary?
-    int ret_enable = OSCC_ERROR;
-    ret_enable = oscc_enable( );
-	printf("Enabling OSCC: %d\n", ret_enable);
-
-	
-    // Register callback handlers (Activate these later)
 /*
-    oscc_subscribe_to_obd_messages(obd_callback);
-    oscc_subscribe_to_brake_reports(brake_callback);
-    oscc_subscribe_to_steering_reports(steering_callback);
-    oscc_subscribe_to_throttle_reports(throttle_callback);
-    oscc_subscribe_to_fault_reports(fault_callback);
-*/	
+	int ret_enable = OSCC_ERROR;
+    	ret_enable = oscc_enable( );
+	printf("Enabling OSCC: %d\n", ret_enable);
+*/
+	
+	// Register callback handlers 
+
+	//oscc_subscribe_to_obd_messages(obd_callback);
+	oscc_subscribe_to_brake_reports(brake_callback);
+	//oscc_subscribe_to_steering_reports(steering_callback);
+	oscc_subscribe_to_throttle_reports(throttle_callback);
+	//oscc_subscribe_to_fault_reports(fault_callback);
+	
 	// Activate listening to UDP (Add)
 /*
 	....
@@ -55,7 +61,7 @@ teleop_cmd_init(){
 
 void teleop_cmd_close( )
 {
-    oscc_disable( );
+//    oscc_disable( );
     oscc_close( 1 ); 
 }
 
@@ -63,3 +69,51 @@ void teleop_cmd_close( )
 int check_for_teleop_cmd_update( ){
 	return 0;
 };
+
+
+
+
+//// Internal functions
+
+// Callback functions performed upon receival of CAN messages
+
+
+static void throttle_callback(oscc_throttle_report_s *report)
+{
+    if ( report->operator_override )
+    {
+         commander_disable_controls();
+
+        printf("Override: Throttle\n");
+    }
+}
+
+/*
+static void angle_steering_callback(oscc_steering_report_s *report)
+{
+    if ( report->operator_override )
+    {
+        // commander_disable_controls();
+
+        printf("Override: Steering\n");
+    }
+}
+*/
+
+static void brake_callback(oscc_brake_report_s * report)
+{
+    if ( report->operator_override )
+    {
+        // commander_disable_controls();
+
+        printf("Override: Brake\n");
+    }
+//    printf("Brake callback!\n");
+}
+
+
+
+
+
+
+

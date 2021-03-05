@@ -305,7 +305,7 @@ oscc_result_t oscc_publish_steering_angle( uint8_t axle, double angle ){
 	angle = (angle < -1.0) ? -1.0 : angle;
 	
 	// Scale to 1 degree resolution and shift into positive range
-	uint16_t angle_scaled = (uint16_t)((double)ANGLE_STEER_AMPLITUDE * angle) + ANGLE_STEER_CENTER;
+	uint16_t angle_scaled = (uint16_t)(((int)ANGLE_STEER_AMPLITUDE * angle) + ANGLE_STEER_CENTER);
 	
 	//DEBUG:
 	//printf("\n angle_scaled in oscc_publish_steering_angle: %d \n" , angle_scaled);
