@@ -53,6 +53,7 @@ CMakeFiles/oscc-joystick-commander.dir/src/main.c.o: ../oscc/api/include/vehicle
 CMakeFiles/oscc-joystick-commander.dir/src/main.c.o: ../oscc/api/include/vehicles/kia_soul_petrol.h
 CMakeFiles/oscc-joystick-commander.dir/src/main.c.o: ../src/main.c
 
+CMakeFiles/oscc-joystick-commander.dir/src/teleop_cmd.c.o: ../include/teleop_cmd.h
 CMakeFiles/oscc-joystick-commander.dir/src/teleop_cmd.c.o: ../oscc/api/include/can_protocols/brake_can_protocol.h
 CMakeFiles/oscc-joystick-commander.dir/src/teleop_cmd.c.o: ../oscc/api/include/can_protocols/fault_can_protocol.h
 CMakeFiles/oscc-joystick-commander.dir/src/teleop_cmd.c.o: ../oscc/api/include/can_protocols/magic.h

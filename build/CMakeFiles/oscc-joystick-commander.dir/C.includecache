@@ -6,6 +6,8 @@
 
 #IncludeRegexTransform: 
 
+../include/teleop_cmd.h
+
 ../oscc/api/include/can_protocols/brake_can_protocol.h
 stdint.h
 -
@@ -89,6 +91,8 @@ oscc.h
 /home/pi/Woodpecker_CAN_Controller/src/oscc.h
 vehicles.h
 /home/pi/Woodpecker_CAN_Controller/src/vehicles.h
+teleop_cmd.h
+/home/pi/Woodpecker_CAN_Controller/src/teleop_cmd.h
 can_protocols/brake_can_protocol.h
 /home/pi/Woodpecker_CAN_Controller/src/can_protocols/brake_can_protocol.h
 can_protocols/steering_angle_can_protocol.h

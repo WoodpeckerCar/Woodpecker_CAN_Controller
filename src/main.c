@@ -17,6 +17,9 @@
 #define TELEOP_CMD_UPDATE_INTERVAL_MICRO (50000)
 #define SLEEP_TICK_INTERVAL_MICRO (1000)
 
+
+
+
 static int error_thrown = OSCC_OK;
 
 static unsigned long long get_timestamp_micro( )
@@ -81,7 +84,7 @@ int main( int argc, char **argv )
 						break;
 				}	
 				
-				printf("\nAngle command: %lf, Angle in degrees: %lf \n\n", angle_cmd, (angle_cmd*520.0) );
+				printf("\nAngle command: %lf, Angle in degrees: %lf, Global incremental: %d \n\n", angle_cmd, (angle_cmd*520.0), global_incremental );
 
 				oscc_publish_steering_angle(ANGLE_STEERING_AXLE_1, angle_cmd);
 			}

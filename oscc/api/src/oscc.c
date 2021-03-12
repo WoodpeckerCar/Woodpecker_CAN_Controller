@@ -334,10 +334,10 @@ oscc_result_t oscc_publish_steering_angle( uint8_t axle, double angle ){
 
 	switch (axle) {
 		case (ANGLE_STEERING_AXLE_1):
-			result = oscc_can_write(OSCC_ANGLE_STEERING_CMD_2_CAN_ID, (void *) &steering_cmd_angle, sizeof(steering_cmd_angle) );		
+			result = oscc_can_write(OSCC_ANGLE_STEERING_1_CMD_CAN_ID, (void *) &steering_cmd_angle, sizeof(steering_cmd_angle) );		
 			break;
 		default:
-			result = oscc_can_write(OSCC_ANGLE_STEERING_CMD_1_CAN_ID, (void *) &steering_cmd_angle, sizeof(steering_cmd_angle) );
+			result = oscc_can_write(OSCC_ANGLE_STEERING_2_CMD_CAN_ID, (void *) &steering_cmd_angle, sizeof(steering_cmd_angle) );
 			break;
 	}
 

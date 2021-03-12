@@ -15,15 +15,15 @@
  * @brief Steering angle command message (CAN frame) ID's.
  * 		  
  */
-#define OSCC_ANGLE_STEERING_CMD_1_CAN_ID (0x469) // Axle 1
-#define OSCC_ANGLE_STEERING_CMD_2_CAN_ID (0x369) // Axle 2
+#define OSCC_ANGLE_STEERING_1_CMD_CAN_ID (0x469) // Axle 1
+#define OSCC_ANGLE_STEERING_2_CMD_CAN_ID (0x369) // Axle 2
 
 /*
  * @brief Steering angle report message (CAN frame) ID.
  *
  */
-#define OSCC_ANGLE_STEERING_REPORT_1_CAN_ID (0x401)
-#define OSCC_ANGLE_STEERING_REPORT_2_CAN_ID (0x301)
+#define OSCC_ANGLE_STEERING_1_REPORT_CAN_ID (0x401)
+#define OSCC_ANGLE_STEERING_2_REPORT_CAN_ID (0x301)
 
 /*
  * @brief Defines for specifying which AXLE is commanded

@@ -14,6 +14,7 @@
 #include "oscc.h"
 //#include "joystick.h"
 #include "vehicles.h"
+#include "teleop_cmd.h"
 
 #include "can_protocols/brake_can_protocol.h"
 //#include "can_protocols/steering_can_protocol.h"
@@ -93,12 +94,13 @@ static void throttle_callback(oscc_throttle_report_s *report)
 
 static void angle_steering_1_callback(oscc_steering_report_s *report)
 {
-    printf("angle_steering_1_callback\n");
+    //printf("angle_steering_1_callback\n");
+    ++ global_incremental;
 	
 }
 static void angle_steering_2_callback(oscc_steering_report_s *report)
 {
-    printf("angle_steering_2_callback\n");
+    //printf("angle_steering_2_callback\n");
 }
 
 

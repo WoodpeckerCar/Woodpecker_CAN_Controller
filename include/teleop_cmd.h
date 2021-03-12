@@ -9,6 +9,9 @@
 #define TELEOP_CMD_H
 
 
+
+volatile int global_incremental;
+
 /**
  * @brief Initialize teleop_cmd for use
  *
